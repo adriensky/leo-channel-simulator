@@ -2,7 +2,6 @@ from fastapi import APIRouter
 from app.core.controller import controller
 from app.models.requests import (
     AttenuationRequest,
-    NoiseEnableRequest,
     DopplerRequest,
     MeasurementPointRequest,
 )
@@ -26,29 +25,37 @@ def get_state() -> StateResponse:
 
 @router.post("/set_signal_attenuation", response_model=GenericResponse)
 def set_signal_attenuation(req: AttenuationRequest) -> GenericResponse:
-    controller.set_signal_attenuation(req.value_db)
+    applied_value = controller.set_signal_attenuation(req.value_db)
     return GenericResponse(
         status="ok",
-        message=f"Signal attenuation set to {req.value_db} dB",
+        message=f"Signal attenuation set to {applied_value} dB",
     )
 
 
 @router.post("/set_noise_attenuation", response_model=GenericResponse)
 def set_noise_attenuation(req: AttenuationRequest) -> GenericResponse:
-    controller.set_noise_attenuation(req.value_db)
+    applied_value = controller.set_noise_attenuation(req.value_db)
     return GenericResponse(
         status="ok",
-        message=f"Noise attenuation set to {req.value_db} dB",
+        message=f"Noise attenuation set to {applied_value} dB",
     )
 
 
 @router.post("/enable_noise", response_model=GenericResponse)
-def enable_noise(req: NoiseEnableRequest) -> GenericResponse:
-    controller.set_noise_enabled(req.enabled)
-    state = "enabled" if req.enabled else "disabled"
+def enable_noise() -> GenericResponse:
+    controller.enable_noise()
     return GenericResponse(
         status="ok",
-        message=f"Noise {state}",
+        message="Noise enabled",
+    )
+
+
+@router.post("/disable_noise", response_model=GenericResponse)
+def disable_noise() -> GenericResponse:
+    controller.disable_noise()
+    return GenericResponse(
+        status="ok",
+        message="Noise disabled",
     )
 
 

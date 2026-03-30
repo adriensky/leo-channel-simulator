@@ -21,21 +21,27 @@ def main() -> None:
 
     r = requests.post(
         f"{BASE_URL}/set_signal_attenuation",
-        json={"value_db": 12.5},
+        json={"value_db": 12.63},  # rounds to 12.75
     )
     print_response("POST /set_signal_attenuation", r)
 
     r = requests.post(
         f"{BASE_URL}/set_noise_attenuation",
-        json={"value_db": 18.0},
+        json={"value_db": 80.1},  # rejected (>80)
+    )
+    print_response("POST /set_noise_attenuation (invalid > 80 dB)", r)
+
+    r = requests.post(
+        f"{BASE_URL}/set_noise_attenuation",
+        json={"value_db": 18.12},  # rounds to 18.0
     )
     print_response("POST /set_noise_attenuation", r)
 
-    r = requests.post(
-        f"{BASE_URL}/enable_noise",
-        json={"enabled": True},
-    )
+    r = requests.post(f"{BASE_URL}/enable_noise")
     print_response("POST /enable_noise", r)
+
+    r = requests.post(f"{BASE_URL}/disable_noise")
+    print_response("POST /disable_noise", r)
 
     r = requests.post(
         f"{BASE_URL}/set_doppler",

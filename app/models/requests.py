@@ -3,11 +3,7 @@ from pydantic import BaseModel, Field
 
 
 class AttenuationRequest(BaseModel):
-    value_db: float = Field(..., ge=0.0, le=100.0)
-
-
-class NoiseEnableRequest(BaseModel):
-    enabled: bool
+    value_db: float = Field(..., ge=0.0, le=80.0)
 
 
 class DopplerRequest(BaseModel):
