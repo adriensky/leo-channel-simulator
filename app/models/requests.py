@@ -11,4 +11,4 @@ class DopplerRequest(BaseModel):
 
 
 class MeasurementPointRequest(BaseModel):
-    point: Literal["rf1", "rf2", "rf3", "rf4", "off"]
+    point: Literal["rf1", "rf2", "rf3", "rf4", "all_off"]
