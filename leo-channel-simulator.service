@@ -1,0 +1,14 @@
+[Unit]
+Description=LEO Channel Simulator FastAPI Service
+After=network.target
+
+[Service]
+Type=simple
+User=rf-team
+WorkingDirectory=/home/rf-team/leo-channel-simulator
+ExecStart=/home/rf-team/leo-channel-simulator/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

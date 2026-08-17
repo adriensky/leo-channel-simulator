@@ -5,7 +5,7 @@ from app.models.requests import (
     DopplerRequest,
     MeasurementPointRequest,
 )
-from app.models.responses import GenericResponse, PowerResponse, StateResponse
+from app.models.responses import GenericResponse, StateResponse
 
 router = APIRouter(tags=["Control"])
 
@@ -74,16 +74,4 @@ def select_measurement_point(req: MeasurementPointRequest) -> GenericResponse:
     return GenericResponse(
         status="ok",
         message=f"Measurement point set to {req.point}",
-    )
-
-
-@router.get("/read_power", response_model=PowerResponse)
-def read_power() -> PowerResponse:
-    power_dbm = controller.read_power()
-    state = controller.get_state()
-    return PowerResponse(
-        status="ok",
-        message="Power read successfully",
-        power_dbm=power_dbm,
-        measurement_point=state["measurement_point"],
     )

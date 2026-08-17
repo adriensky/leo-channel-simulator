@@ -25,9 +25,36 @@ class MockHardware(HardwareInterface):
         self.state.measurement_point = point
         self._update_mock_power()
 
-    def read_power_dbm(self) -> float:
+    def read_power_dbm(self, freq_mhz: float = 1000.0) -> float:
         self._update_mock_power()
         return self.state.power_dbm
+
+    def get_temperature_c(self) -> float:
+        return 25.0
+
+    def set_power_meter_mode(self, mode: int) -> None:
+        pass
+
+    def get_device_info(self) -> dict:
+        return {"model": "MOCK-PWR", "serial": "000000", "firmware": "M1"}
+
+    def send_scpi(self, command: str) -> str:
+        return "0"
+
+    def get_sample_time_us(self) -> int:
+        return 1000
+
+    def set_sample_time_us(self, time_us: int) -> None:
+        pass
+
+    def get_avg_settings(self) -> dict:
+        return {"avg_enabled": False, "avg_count": 1}
+
+    def set_avg_mode(self, enabled: bool) -> None:
+        pass
+
+    def set_avg_count(self, count: int) -> None:
+        pass
 
     def _update_mock_power(self) -> None:
         # Simple mock model:

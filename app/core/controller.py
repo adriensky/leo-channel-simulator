@@ -55,8 +55,35 @@ class Controller:
     def select_measurement_point(self, point: str) -> None:
         self.hardware.set_measurement_point(point)
 
-    def read_power(self) -> float:
-        return self.hardware.read_power_dbm()
+    def read_power(self, freq_mhz: float = 1000.0) -> float:
+        return self.hardware.read_power_dbm(freq_mhz)
+
+    def get_device_info(self) -> dict:
+        return self.hardware.get_device_info()
+
+    def send_scpi(self, command: str) -> str:
+        return self.hardware.send_scpi(command)
+
+    def get_sample_time_us(self) -> int:
+        return self.hardware.get_sample_time_us()
+
+    def set_sample_time_us(self, time_us: int) -> None:
+        self.hardware.set_sample_time_us(time_us)
+
+    def get_avg_settings(self) -> dict:
+        return self.hardware.get_avg_settings()
+
+    def set_avg_mode(self, enabled: bool) -> None:
+        self.hardware.set_avg_mode(enabled)
+
+    def set_avg_count(self, count: int) -> None:
+        self.hardware.set_avg_count(count)
+
+    def read_temperature(self) -> float:
+        return self.hardware.get_temperature_c()
+
+    def set_power_meter_mode(self, mode: int) -> None:
+        self.hardware.set_power_meter_mode(mode)
 
 
 controller = Controller()
